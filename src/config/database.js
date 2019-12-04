@@ -2,7 +2,7 @@ require('dotenv/config');
 
 // nao usando import/export pq eh utilziado fora da aplicacao pelo sequelize-cli, via linha de comando e nao conhece o impor/exports
 module.exports = {
-  dialect: 'mssql',
+  dialect: 'mysql',
   host: process.env.DB_HOST,
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
