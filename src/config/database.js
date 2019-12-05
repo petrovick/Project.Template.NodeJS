@@ -1,17 +1,18 @@
-require('dotenv/config');
+require('../bootstrap');
 
-// nao usando import/export pq eh utilziado fora da aplicacao pelo sequelize-cli, via linha de comando e nao conhece o impor/exports
 module.exports = {
-  dialect: 'mysql',
+  dialect: process.env.DB_DIALECT || 'mysql',
   host: process.env.DB_HOST,
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
+  storage: './__tests__/database.sqlite',
+  logging: false,
   define: {
     freezeTableName: true,
-    timestamps: false, // Coluna created_at e updated_at criada por padrao
-    underscored: false, // Garante o padrao de criacao de tabelas e colunas
-    underscoredAll: false, // Garante o padrao de criacao de tabelas e colunas(Uuser_groups ao inves de UserGroups)
+    timestamps: false,
+    underscored: false,
+    underscoredAll: false,
   },
   dialectOptions: {
     options: {
@@ -19,10 +20,4 @@ module.exports = {
       dateFirst: 1,
     },
   },
-  /*
-  define: {
-    timestamps: true, // Coluna created_at e updated_at criada por padrao
-    underscored: true, // Garante o padrao de criacao de tabelas e colunas
-    underscoredAll: true, // Garante o padrao de criacao de tabelas e colunas(Uuser_groups ao inves de UserGroups)
-  }, */
 };

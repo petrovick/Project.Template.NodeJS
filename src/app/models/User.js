@@ -30,15 +30,13 @@ class User extends Model {
       },
       {
         sequelize,
-        tableName: 'User'
+        tableName: 'users',
       }
     );
 
-
-
     // Hooks: Executa acoes no model com base em algum evento(antes de salvar, depois de salvar, etc...)
     this.addHook('beforeSave', async user => {
-      console.log('Entrando no before save')
+      console.log('Entrando no before save');
       if (user.password) {
         user.password_hash = await bcrypt.hash(user.password, 8);
       }

@@ -14,12 +14,12 @@ export default async (req, res, next) => {
 
     await schema.validate(req.body, { abortEarly: false });
 
-    console.log('passou');
     return next();
   } catch (err) {
-    console.log('entrou aqui');
-    return res
-      .status(400)
-      .json({ error: 'Validation fails!', messages: err.inner });
+    console.log('Entrou no catch aqui');
+    return res.status(400).json({
+      error: 'Validation fails!',
+      messages: err.inner.map(e => e.message),
+    });
   }
 };

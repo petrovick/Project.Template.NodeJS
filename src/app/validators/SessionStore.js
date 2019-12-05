@@ -11,8 +11,11 @@ export default async (req, res, next) => {
 
     return next();
   } catch (err) {
-    return res
-      .status(400)
-      .json({ error: 'Validation fails!', messages: err.inner });
+    console.log('Entrou no catch aqui');
+    return res.status(400).json({
+      error: 'Validation fails!',
+      status: 401,
+      messages: err.inner.map(e => e.message),
+    });
   }
 };
