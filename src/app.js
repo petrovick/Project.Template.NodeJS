@@ -5,13 +5,19 @@ import http from 'http';
 import cors from 'cors';
 import Helmet from 'helmet';
 import Youch from 'youch';
+
+import swaggerJsDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+
 import * as Sentry from '@sentry/node';
 import redis from 'redis';
 import RateLimit from 'express-rate-limit';
 import RateLimitRedis from 'rate-limit-redis';
+
 import SentryConfig from './config/sentry';
 
 import routes from './routes';
+import swaggerConfig from './config/swaggerConfig';
 
 import 'express-async-errors';
 import './database';
@@ -22,10 +28,22 @@ class App {
     this.server = http.Server(this.app);
 
     Sentry.init(SentryConfig);
-
+    this.documentation();
     this.middlewares();
     this.routes();
     this.exceptionHandler();
+  }
+
+  documentation() {
+    // Extended: https://swagger.io/specification/#infoObject
+    const options = swaggerConfig;
+    const swaggerSpec = swaggerJsDoc(options);
+    this.app.get('/swagger.json', function(req, res) {
+      res.setHeader('Content-Type', 'application/json');
+      res.send(swaggerSpec);
+    });
+
+    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   }
 
   middlewares() {

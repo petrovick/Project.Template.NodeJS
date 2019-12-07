@@ -28,6 +28,8 @@
     "rate-limit-redis": "^1.7.0",
     "redis": "^2.8.0",
     "sequelize": "^5.21.2",
+    "swagger-jsdoc": "^3.4.0",
+    "swagger-ui-express": "^4.0.7",
     "tedious": "^6.6.2",
     "youch": "^2.0.10",
     "yup": "^0.27.0"
